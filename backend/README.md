@@ -6,24 +6,28 @@ NestJs framework
 ## Installation
 
 ```bash
-$ npm install
+$ yarn install
 ```
+
+## Running migrate and init data
+
+yarn migrate:up
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+$ yarn start
 
 # watch mode
-$ npm run start:dev
+$ yarn start:dev
 
 # production mode
-$ npm run start:prod
+$ yarn start:prod
 ```
 
 ## Test
 
 ```bash
 # run test: contoller, service, geo.util
-$ npm run test
+$ yarn test
