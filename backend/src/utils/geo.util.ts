@@ -5,6 +5,11 @@ import {
 
 import { Point } from "../dtos/point.dto";
 
+/**
+ * @param  {Point} point
+ * @param  {number} distance
+ * @returns number
+ */
 export const getRateLatLon = (point: Point, distance: number): { rLat: number, rLon: number } => {
 
     const pos1 = computeDestinationPoint(
@@ -26,6 +31,11 @@ export const getRateLatLon = (point: Point, distance: number): { rLat: number, r
 
 }
 
+/**
+ * @param  {Point} point
+ * @param  {number} distance
+ * @returns Point
+ */
 export const findARound = (point: Point, distance: number): { start: Point, end: Point } => {
     const lo = getBoundsOfDistance(
         point,
@@ -38,7 +48,9 @@ export const findARound = (point: Point, distance: number): { start: Point, end:
     }
 }
 
-
+/**
+ * @param  {number} no
+ */
 export const roundLatLon = (no: number) => {
     return Math.round(no * 10000) / 10000
 }
