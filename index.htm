@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Add a default marker to a web map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 50px; bottom: 0; width: 100%;  }
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 50%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: black;
+  margin-left: 10px;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 50px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.applicant{
+	position: absolute;
+	bottom: -15px;
+	left: auto;
+	font-size: 9px;
+	width: 100px;
+}
+
+.marker {
+	position: relative;
+	border: 2px solid #00B4CC;
+	border-radius: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 50%; 
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+.container {
+	display: block;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="wrap">
+			<div class="search">
+			   <input type="text" id="distance" class="searchTerm" placeholder="distance(m)?" name="distance">
+			   <input type="text" id="latitude" class="searchTerm" placeholder="Latitude?" name="lat">
+			   <input type="text" id="longitude" class="searchTerm" placeholder="Longitude?" name="lon">
+
+			   <div class="searchTerm">
+				<input type="checkbox" id="currentLocation" name="currentLocation" value="location">
+				<label for="currentLocation">My Location</label>
+			   </div>
+			  
+			   <button type="submit" class="searchButton" id="searchLocation">
+				 <i class="fa fa-search" style="color:red"></i>
+			  </button>
+
+			
+			</div>
+		 </div>
+		
+	</div>
+	<div style="width: 80%;height: 100;">
+		<div id="map"></div>
+	</div>
+ 
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoia2h1eWVubnYiLCJhIjoiY2xhcWVzaHAwMTB1bjNvb2FtZWd3bGhtdyJ9.iwz52W2Yf8ouPJOMgDPJrw';
+
+	$(document).ready(function() {
+		renderMapDefault()
+		// search button click
+		$('#searchLocation').click(function(e) {
+			search();
+		});
+
+		// choose my location
+		$('#currentLocation').change(function(e) {
+			$('#latitude').prop('disabled', $('#currentLocation').is(":checked"));
+			$('#longitude').prop('disabled', $('#currentLocation').is(":checked"));
+		});
+
+		// search event
+		function search() {
+			var lat = 0;
+			var lon = 0;
+			var distance = 0;
+
+			distance = $('#distance').val();
+			if (!distance || distance < 500) {
+				alert("You must input distance and value > 500 m");
+				return;
+			}
+
+			if ($('#currentLocation').is(":checked")) {
+				// get current location
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition((position) => {
+						lat = position.coords.latitude;
+						lon = position.coords.longitude;
+
+						$.get('http://localhost:3001/food-trucks?latitude='+lat+'&longitude='+lon+'&distance=1000', function(data) {
+							renderMap(lat,lon, data)
+						});
+					});
+					return;
+				} else {
+					alert("Can not get your location!")
+					return;
+				}
+			} else {
+				lat = $('#latitude').val();
+				if (!lat) {
+					alert("You must input Latitude");
+					return;
+				} else {
+					lon = $('#longitude').val();
+
+					if (!lon) {
+						alert("You must input Longitude");
+						return;
+					}
+				}
+			}
+
+			$.get('http://localhost:3001/food-trucks?latitude='+lat+'&longitude='+lon+'&distance=1000', function(data) {
+				renderMap(lat,lon, data)
+			});
+		}
+	});
+
+	/**
+	 * Load default
+	 **/
+	function renderMapDefault() {
+		const map = new mapboxgl.Map({
+			container: 'map',
+			// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+			style: 'mapbox://styles/mapbox/streets-v12',
+			center: [-122.38544181156826,37.76200845803015],
+			zoom: 14
+		});
+	}
+	
+	/**
+	 * Render map follow search result
+	 **/
+	function renderMap(lat, lon, data) {
+		if (data.length === 0) {
+			alert("Search result not found");
+		}
+
+		const map = new mapboxgl.Map({
+			container: 'map',
+			// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+			style: 'mapbox://styles/mapbox/streets-v12',
+			center: [lon, lat],
+			zoom: 14
+		});
+
+		const iconSize = [40,40];
+
+		const icons = new Map();
+		icons.set('Push Cart', 'https://cdn-icons-png.flaticon.com/512/4250/4250729.png');
+		icons.set('Truck', 'https://cdn-icons-png.flaticon.com/512/2203/2203155.png');
+		icons.set('Other', 'https://cdn-icons-png.flaticon.com/512/3063/3063822.png');
+
+		data && data.forEach(truck => {
+			const el = document.createElement('div');
+			const width = iconSize[0];
+			const height = iconSize[1];
+			el.className = 'marker';
+			el.style.backgroundImage = `url(${icons.get(truck.facilityType) ?? icons.get("Other")})`;
+			el.style.width = `${width}px`;
+			el.style.height = `${height}px`;
+			el.style.backgroundSize = '100%';
+
+			// add name
+			const name = document.createElement('span');
+			name.className = 'applicant';
+		
+			name.append(truck.facilityType)
+
+			// add name to div
+			el.append(name)
+
+			el.addEventListener('click', () => {
+				var str = '';
+				Object.keys(truck).forEach(key => {
+					str += `${key}: ${truck[key]}\n`
+				})
+
+				window.alert(str);
+			});
+
+			new mapboxgl.Marker(el)
+			.setLngLat([truck.longitude, truck.latitude])
+			.addTo(map);
+		});
+	
+	}
+</script>
+ 
+</body>
+</html>
