@@ -105,6 +105,8 @@ body{
 	</div>
  
 <script>
+	const BASE_URL = 'http://localhost:3001';
+
 	mapboxgl.accessToken = 'pk.eyJ1Ijoia2h1eWVubnYiLCJhIjoiY2xhcWVzaHAwMTB1bjNvb2FtZWd3bGhtdyJ9.iwz52W2Yf8ouPJOMgDPJrw';
 
 	$(document).ready(function() {
@@ -139,7 +141,7 @@ body{
 						lat = position.coords.latitude;
 						lon = position.coords.longitude;
 
-						$.get('http://localhost:3001/food-trucks?latitude='+lat+'&longitude='+lon+'&distance=1000', function(data) {
+						$.get(BASE_URL + '/food-trucks?latitude=' + lat + '&longitude=' + lon + '&distance=1000', function (data) {
 							renderMap(lat,lon, data)
 						});
 					});
@@ -163,7 +165,7 @@ body{
 				}
 			}
 
-			$.get('http://localhost:3001/food-trucks?latitude='+lat+'&longitude='+lon+'&distance=1000', function(data) {
+			$.get(BASE_URL + '/food-trucks?latitude=' + lat + '&longitude=' + lon + '&distance=1000', function (data) {
 				renderMap(lat,lon, data)
 			});
 		}
