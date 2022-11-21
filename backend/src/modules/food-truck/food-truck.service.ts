@@ -27,7 +27,6 @@ export class FoodTruckService extends BaseService<FoodTruck, FoodTruckRepository
         const tableName = this.repository.metadata.tableName
 
         const query = this.repository.createQueryBuilder(tableName)
-
         const point = new Point({ latitude: filters.latitude, longitude: filters.longitude })
 
         let distance = filters.distance
@@ -49,8 +48,6 @@ export class FoodTruckService extends BaseService<FoodTruck, FoodTruckRepository
             .andWhere("longitude <= :longitude2", {
                 longitude2: points.end.longitude
             })
-
-        console.log("Debug", points, query.getSql());
 
         return query.getMany()
     }

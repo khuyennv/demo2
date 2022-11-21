@@ -11,7 +11,6 @@ import { SentryModule } from "@ntegral/nestjs-sentry";
 
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { MessageComponent } from "./components/message.component";
 import appConfig from "./configs/app.config";
 import databaseConfig from "./configs/database.config";
 import { DatabaseModule } from "./database/database.module";
@@ -88,7 +87,6 @@ import { UserModule } from "./modules/user/user.module";
     providers: [
         AppService,
         { provide: APP_FILTER, useClass: AllExceptionFilter },
-        MessageComponent,
         Reflector,
     ],
 })

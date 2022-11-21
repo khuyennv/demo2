@@ -43,14 +43,19 @@ export class FoodTruck extends BaseEntity {
     foodItems: string;
 
     @Column("double", { nullable: true, name: "latitude" })
-    latitude: string;
+    latitude: number;
 
     @Column("double", { nullable: true, name: "longitude" })
-    longitude: string;
+    longitude: number;
 
     @Column("varchar", { nullable: true, name: "received", length: 20 })
     received: string;
 
     @Column("datetime", { nullable: true, name: "expirationdate" })
     expirationdate: string;
+
+    constructor(partial: Partial<FoodTruck>) {
+        super();
+        Object.assign(this, partial);
+    }
 }

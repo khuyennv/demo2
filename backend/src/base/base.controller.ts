@@ -13,39 +13,35 @@ import {
 } from "../utils/throw-exception.util";
 
 export class BaseController {
-    private l: MessageComponent
-
-    constructor(
-        i18n: MessageComponent
-    ) {
-        this.l = i18n
-    }
-
+    /**
+     * @param  {any} error
+     * @param  {TokenDto} token?
+     */
     protected throwErrorProcess(error: any, token?: TokenDto) {
         console.log("Debug", error)
         const lang = token ? token.lang : "vi"
         if (error instanceof BaseError) {
             throw new BadRequestException({
-                message: this.l.lang(error.getMessage(), lang),
+                message: MessageComponent.lang(error.getMessage(), lang),
                 cause: error.getCause(),
                 errorCode: error.getErrorCode()
             })
         } else if (error instanceof TypeError) {
             throw throwValidate(
-                this.l.lang("UNKNOWN_ERROR", lang),
+                MessageComponent.lang("UNKNOWN_ERROR", lang),
                 { errorContent: { message: error.message, stack: error.stack } },
                 ErrorCodes.SYNTAXERROR
             )
         } else if (error instanceof QueryFailedError) {
             throwDatabase(
-                this.l.lang("UNKNOWN_ERROR", lang),
+                MessageComponent.lang("UNKNOWN_ERROR", lang),
                 JSON.stringify(error),
                 ErrorCodes.UNKNOWN
             )
         }
 
         throw new DatabaseError(
-            this.l.lang("UNKNOWN_ERROR", "vi"),
+            MessageComponent.lang("UNKNOWN_ERROR", "vi"),
             { errorContent: error },
             ErrorCodes.UNKNOWN
         )

@@ -16,13 +16,11 @@ export class ValidationPipe422 extends ValidationPipe {
             return await super.transform(value, metadata)
         } catch (e) {
 
-            const messageComponent = new MessageComponent()
-
             if (e instanceof BadRequestException) {
                 const response = e.getResponse()
 
                 throw new BadRequestException({
-                    message: messageComponent.lang("VALIDATION_INPUT_TYPE_ERROR"),
+                    message: MessageComponent.lang("VALIDATION_INPUT_TYPE_ERROR"),
                     cause: isString(response) ? response : response,
                     errorCode: ErrorCodes.VALIDATION_INPUT_TYPE_ERROR
                 })

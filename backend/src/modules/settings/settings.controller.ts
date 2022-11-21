@@ -27,8 +27,8 @@ import { SettingsService } from "./settings.service";
 @ApiTags('Settings')
 @Controller('settings')
 export class SettingsController extends BaseController {
-    constructor(private readonly settingsService: SettingsService, private readonly i18n: MessageComponent) {
-        super(i18n);
+    constructor(private readonly settingsService: SettingsService) {
+        super();
     }
 
    
@@ -41,7 +41,7 @@ export class SettingsController extends BaseController {
         try {
             return {
                 data: await this.settingsService.create(createSettingDto),
-                message: this.i18n.lang("INSERT_SUCCESS", token.lang)
+                message: MessageComponent.lang("INSERT_SUCCESS", token.lang)
             }
         } catch (error) {
             this.throwErrorProcess(error, token)
@@ -85,7 +85,7 @@ export class SettingsController extends BaseController {
             await this.settingsService.updateSetting({ name }, updateSettingDto)
 
             return {
-                message: this.i18n.lang("UPDATE_SUCCESS", token.lang)
+                message: MessageComponent.lang("UPDATE_SUCCESS", token.lang)
             }
         } catch (error) {
             this.throwErrorProcess(error, token)
@@ -97,7 +97,7 @@ export class SettingsController extends BaseController {
         try {
             if ((await this.settingsService.remove(+id)).affected) {
                 return {
-                    message: this.i18n.lang("DELETE_SUCCESS", token.lang)
+                    message: MessageComponent.lang("DELETE_SUCCESS", token.lang)
                 }
             } else {
                 throw new DatabaseError(

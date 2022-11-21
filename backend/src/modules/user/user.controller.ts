@@ -1,5 +1,4 @@
 import { BaseController } from "src/base/base.controller";
-import { MessageComponent } from "src/components/message.component";
 import { User } from "src/entities/User";
 
 import {
@@ -13,9 +12,8 @@ import { UserService } from "./user.service";
 export class UserController extends BaseController {
     constructor(
         private readonly userService: UserService,
-        private i18n: MessageComponent,
     ) {
-        super(i18n);
+        super();
     }
     
 	@Get("")

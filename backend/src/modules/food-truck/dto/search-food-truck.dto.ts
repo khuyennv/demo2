@@ -36,4 +36,11 @@ export class SearchFoodTruckDto extends BaseDto<FoodTruck> {
     @IsInt()
     @Type(() => Number)
     distance: number
+
+    constructor(params?: Record<string, unknown> | Partial<FoodTruck>) {
+        super();
+        if (params) {
+            this.setAttributes(params)
+        }
+    }
 }

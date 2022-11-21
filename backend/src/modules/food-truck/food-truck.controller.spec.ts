@@ -2,27 +2,30 @@ import {
   Test,
   TestingModule,
 } from "@nestjs/testing";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { FoodTruck } from "../../entities/FoodTruck";
-import { LoggerService } from "../../logger/custom.logger";
 import { FoodTruckController } from "./food-truck.controller";
-import { FoodTruckRepository } from "./food-truck.repository";
 import { FoodTruckService } from "./food-truck.service";
 
 describe('FoodTruckController', () => {
     let controller: FoodTruckController;
+    let service: FoodTruckService;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            imports: [
-                TypeOrmModule.forFeature([FoodTruck]),
-            ],
             controllers: [FoodTruckController],
-            providers: [FoodTruckService, FoodTruckRepository, LoggerService],
+            providers: [{
+                provide: FoodTruckService,
+                useValue: {
+                    searchFoodTrucks: jest.fn().mockResolvedValue([
+                        { name: 'Test Cat 2', breed: 'Test Breed 2', age: 3 },
+                        { name: 'Test Cat 3', breed: 'Test Breed 3', age: 2 },
+                    ]),
+                }
+            }],
         }).compile();
 
         controller = module.get<FoodTruckController>(FoodTruckController);
+        service = module.get<FoodTruckService>(FoodTruckService);
     });
 
     it('should be defined', () => {
