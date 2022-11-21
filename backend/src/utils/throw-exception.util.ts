@@ -1,12 +1,3 @@
-import { DatabaseError } from "src/exceptions/errors/database.error";
-import {
-  InvalidExpressionError,
-} from "src/exceptions/errors/invalid-expression.error";
-import { InvalidValueError } from "src/exceptions/errors/invalid-value.error";
-import { NotFoundError } from "src/exceptions/errors/not-found.error";
-import { ServiceCallError } from "src/exceptions/errors/service.call.error";
-import { ValidateError } from "src/exceptions/errors/validate.error";
-
 import {
   BadGatewayException,
   BadRequestException,
@@ -20,6 +11,15 @@ import {
   UnauthorizedException,
   UnsupportedMediaTypeException,
 } from "@nestjs/common";
+
+import { DatabaseError } from "../exceptions/errors/database.error";
+import {
+  InvalidExpressionError,
+} from "../exceptions/errors/invalid-expression.error";
+import { InvalidValueError } from "../exceptions/errors/invalid-value.error";
+import { NotFoundError } from "../exceptions/errors/not-found.error";
+import { ServiceCallError } from "../exceptions/errors/service.call.error";
+import { ValidateError } from "../exceptions/errors/validate.error";
 
 // Expression error
 export const throwValidate = (error: string, cause: string | Record<string, unknown>, errorCode: number) => {

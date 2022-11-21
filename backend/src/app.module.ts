@@ -17,7 +17,7 @@ import databaseConfig from "./configs/database.config";
 import { DatabaseModule } from "./database/database.module";
 import { AllExceptionFilter } from "./filter/exception.filter";
 import { LoggerModule } from "./logger/logger.module";
-import { FoodTruckModule } from "./modules/food_truck/food-truck.module";
+import { FoodTruckModule } from "./modules/food-truck/food-truck.module";
 import { SettingsModule } from "./modules/settings/settings.module";
 import { UserModule } from "./modules/user/user.module";
 

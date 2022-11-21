@@ -1,6 +1,5 @@
-import { Property } from "src/utils/general.util";
-
 import { BaseDto } from "../base/base.dto";
+import { Property } from "../utils/general.util";
 
 class Obj { }
 

@@ -1,7 +1,8 @@
 import { camelCase } from "change-case";
 import moment from "moment";
-import { Shift } from "src/dtos/Shift.dto";
-import { Env } from "src/enums/app.enum";
+
+import { Shift } from "../dtos/Shift.dto";
+import { Env } from "../enums/app.enum";
 
 export function Property(className = "fields", defaultValue: unknown = undefined): PropertyDecorator {
     return (target: Record<string, unknown>, name: string, descriptor: PropertyDescriptor = null): void => {

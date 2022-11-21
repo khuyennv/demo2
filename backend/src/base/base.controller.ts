@@ -1,15 +1,16 @@
-import { MessageComponent } from "src/components/message.component";
-import { ErrorCodes } from "src/constants/error-code.const";
-import { TokenDto } from "src/dtos/token.dto";
-import { BaseError } from "src/exceptions/errors/base.error";
-import { DatabaseError } from "src/exceptions/errors/database.error";
-import {
-  throwDatabase,
-  throwValidate,
-} from "src/utils/throw-exception.util";
 import { QueryFailedError } from "typeorm";
 
 import { BadRequestException } from "@nestjs/common";
+
+import { MessageComponent } from "../components/message.component";
+import { ErrorCodes } from "../constants/error-code.const";
+import { TokenDto } from "../dtos/token.dto";
+import { BaseError } from "../exceptions/errors/base.error";
+import { DatabaseError } from "../exceptions/errors/database.error";
+import {
+  throwDatabase,
+  throwValidate,
+} from "../utils/throw-exception.util";
 
 export class BaseController {
     private l: MessageComponent

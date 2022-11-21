@@ -3,10 +3,11 @@ import {
   IsInt,
   IsNumber,
 } from "class-validator";
-import { BaseDto } from "src/base/base.dto";
 import { FoodTruck } from "src/entities/FoodTruck";
 
 import { ApiProperty } from "@nestjs/swagger";
+
+import { BaseDto } from "../../../base/base.dto";
 
 export class SearchFoodTruckDto extends BaseDto<FoodTruck> {
     @ApiProperty({

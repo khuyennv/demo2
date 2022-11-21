@@ -2,7 +2,8 @@ import {
   computeDestinationPoint,
   getBoundsOfDistance,
 } from "geolib";
-import { Point } from "src/dtos/point.dto";
+
+import { Point } from "../dtos/point.dto";
 
 export const getRateLatLon = (point: Point, distance: number): { rLat: number, rLon: number } => {
 

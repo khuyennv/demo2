@@ -1,6 +1,3 @@
-import { BaseController } from "src/base/base.controller";
-import { MessageComponent } from "src/components/message.component";
-
 import {
   Controller,
   Get,
@@ -11,6 +8,8 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 
+import { BaseController } from "../../base/base.controller";
+import { MessageComponent } from "../../components/message.component";
 import { SearchFoodTruckDto } from "./dto/search-food-truck.dto";
 import { FoodTruckService } from "./food-truck.service";
 

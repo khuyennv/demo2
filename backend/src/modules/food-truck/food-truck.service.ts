@@ -1,12 +1,11 @@
-import { BaseService } from "src/base/base.service";
-import { Point } from "src/dtos/point.dto";
-import { FoodTruck } from "src/entities/FoodTruck";
-import { LoggerService } from "src/logger/custom.logger";
-import { findARound } from "src/utils/geo.util";
-
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
+import { BaseService } from "../../base/base.service";
+import { Point } from "../../dtos/point.dto";
+import { FoodTruck } from "../../entities/FoodTruck";
+import { LoggerService } from "../../logger/custom.logger";
+import { findARound } from "../../utils/geo.util";
 import { SearchFoodTruckDto } from "./dto/search-food-truck.dto";
 import { FoodTruckRepository } from "./food-truck.repository";
 

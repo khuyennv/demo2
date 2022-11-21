@@ -1,10 +1,11 @@
-import { FoodTruck } from "src/entities/FoodTruck";
 import {
   DataSource,
   Repository,
 } from "typeorm";
 
 import { Injectable } from "@nestjs/common";
+
+import { FoodTruck } from "../../entities/FoodTruck";
 
 @Injectable()
 export class FoodTruckRepository extends Repository<FoodTruck> {

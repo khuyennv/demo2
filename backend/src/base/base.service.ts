@@ -1,11 +1,4 @@
 import queryString from "query-string";
-import { PaginationDto } from "src/base/pagination.dto";
-import { ErrorCodes } from "src/constants/error-code.const";
-import {
-  toSnakeCase,
-  trim,
-} from "src/utils/general.util";
-import { throwNotFound } from "src/utils/throw-exception.util";
 import {
   BaseEntity,
   DeleteResult,
@@ -19,7 +12,14 @@ import {
 } from "typeorm";
 import { EntityId } from "typeorm/repository/EntityId";
 
+import { PaginationDto } from "../base/pagination.dto";
+import { ErrorCodes } from "../constants/error-code.const";
 import { LoggerService } from "../logger/custom.logger";
+import {
+  toSnakeCase,
+  trim,
+} from "../utils/general.util";
+import { throwNotFound } from "../utils/throw-exception.util";
 import { BaseDto } from "./base.dto";
 import { BaseServiceInterface } from "./base.service.interface";
 
