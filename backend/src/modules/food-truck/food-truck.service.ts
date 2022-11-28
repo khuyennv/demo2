@@ -47,7 +47,9 @@ export class FoodTruckService extends BaseService<FoodTruck, FoodTruckRepository
             })
             .andWhere("longitude <= :longitude2", {
                 longitude2: points.end.longitude
-            })
+			})
+
+		console.log(query.getSql(), query.getParameters());
 
         return query.getMany()
     }
